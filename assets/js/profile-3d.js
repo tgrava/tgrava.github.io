@@ -1,12 +1,12 @@
 // assets/js/profile-3d.js
-// If you loaded via <script> tags, skip imports:
-// import * as THREE from 'three';
-// import { GLTFLoader } from 'three/examples/js/loaders/GLTFLoader.js';
+window.addEventListener('DOMContentLoaded', initAvatar);
 
 async function initAvatar() {
   const canvas = document.getElementById('avatar-canvas');
+  if (!canvas) return console.error('avatar-canvas element not found');
+
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight); // WebGLRenderer.domElement ↔ canvas :contentReference[oaicite:6]{index=6}
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
@@ -14,6 +14,7 @@ async function initAvatar() {
 
   scene.add(new THREE.AmbientLight(0xffffff, 1));
 
+  // Now that the loader script is present, this works:
   const loader = new THREE.GLTFLoader();
   const gltf = await loader.loadAsync('/assets/models/model.glb');
   scene.add(gltf.scene);
@@ -24,5 +25,3 @@ async function initAvatar() {
     renderer.render(scene, camera);
   })();
 }
-
-window.addEventListener('DOMContentLoaded', initAvatar);
