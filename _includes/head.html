@@ -1,6 +1,23 @@
 {% include base_path %}
-<script type="module" src="{{ '/assets/js/profile-3d.js' | relative_url }}"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three":      "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js",
+    "three/":     "https://cdn.jsdelivr.net/npm/three@0.128.0/",
 
+    /* If you need controls: */
+    "three/examples/jsm/controls/OrbitControls":
+      "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/controls/OrbitControls.js",
+
+    /* And your PLYLoader: */
+    "three/examples/jsm/loaders/PLYLoader":
+      "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/PLYLoader.js"
+  }
+}
+</script>
+
+<!-- Then your module script as before: -->
+<script type="module" src="{{ '/assets/js/profile-3d.js' | relative_url }}"></script>
 <meta charset="utf-8">
 
 {% include seo.html %}
