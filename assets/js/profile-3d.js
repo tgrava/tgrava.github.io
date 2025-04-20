@@ -49,34 +49,29 @@ function initAvatar() {
 loader.load(
   '/assets/models/dog2.ply',
   geometry => {
-    // 1. Compute normals (for lighting)
-    geometry.computeVertexNormals();
+-    // currently you have something like:
+-    // const material = new THREE.MeshStandardMaterial({ vertexColors: true });
++    // 1️⃣ Make sure normals exist (in case you switch back to a lit material later)
++    geometry.computeVertexNormals();
++
++    // 2️⃣ Check if the PLY actually gave us a color attribute
++    if (!geometry.hasAttribute('color')) {
++      console.warn('PLY has no color attribute; geometry attributes:', Object.keys(geometry.attributes));
++    }
++
++    // 3️⃣ Use a basic, unlit material so we see raw vertex colors
++    const material = new THREE.MeshBasicMaterial({
++      vertexColors: true,    // use the geometry.attributes.color
++      side: THREE.DoubleSide // optional: see both faces
++    });
++
+     const mesh = new THREE.Mesh(geometry, material);
 
-    // 2. Create a material that reads vertex colors
-    const material = new THREE.MeshStandardMaterial({
-      vertexColors: true,       // ← pick up per‑vertex colors from the PLY
-      side: THREE.DoubleSide    // ← optional, if you need faces visible from both sides
-    });
-
-    // 3. Wrap in a mesh
-    const mesh = new THREE.Mesh(geometry, material);
-
-    // 4. Flip upside‑down (PLY usually has Z‑up; three.js is Y‑up)
-    mesh.rotation.x = Math.PI;
-
-    // 5. (Re‑)compute bounds & auto‑frame as before
-    const bbox   = new THREE.Box3().setFromObject(mesh);
-    const center = bbox.getCenter(new THREE.Vector3());
-    const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
-
-    camera.position.copy(
-      center.clone().add(new THREE.Vector3(0, radius * 1.5, radius * 1.5))
-    );
-    camera.lookAt(center);
-
-    // 6. Add to scene & animate
-    scene.add(mesh);
-    animate(mesh);
++    // 4️⃣ If your model is still upside‑down, flip it back
++    mesh.rotation.x = Math.PI;
++
+     scene.add(mesh);
+     animate(mesh);
   },
   xhr => console.log(`PLY Load ${(xhr.loaded/xhr.total*100).toFixed(1)}%`),
   err => console.error('Error loading PLY:', err)
