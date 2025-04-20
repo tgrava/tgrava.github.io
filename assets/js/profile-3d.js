@@ -46,33 +46,41 @@ function initAvatar() {
 
   // ─── 7. Load the PLY ────────────────────────────────────────────────
   const loader = new PLYLoader();
-  loader.load(
-    '/assets/models/dog2.ply',
-    geometry => {
-      // 7.1 Compute normals & wrap in a rainbow material so it’s visible
-      geometry.computeVertexNormals();
-      const material = new THREE.MeshNormalMaterial({ flatShading: false });
-      const mesh     = new THREE.Mesh(geometry, material);
+loader.load(
+  '/assets/models/dog2.ply',
+  geometry => {
+    // 1. Compute normals (for lighting)
+    geometry.computeVertexNormals();
 
-      // 7.2 Add to scene
-      scene.add(mesh);
+    // 2. Create a material that reads vertex colors
+    const material = new THREE.MeshStandardMaterial({
+      vertexColors: true,       // ← pick up per‑vertex colors from the PLY
+      side: THREE.DoubleSide    // ← optional, if you need faces visible from both sides
+    });
 
-      // 7.3 Debug bounding box & auto‑frame the camera
-      const bbox   = new THREE.Box3().setFromObject(mesh);
-      const center = bbox.getCenter(new THREE.Vector3());
-      const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
-      console.log('Model BBox:', bbox.min, bbox.max);
+    // 3. Wrap in a mesh
+    const mesh = new THREE.Mesh(geometry, material);
 
-      // Position the camera so the model fills the view
-      camera.position.copy(center.clone().add(new THREE.Vector3(0, radius * 1.5, radius * 1.5)));
-      camera.lookAt(center);
+    // 4. Flip upside‑down (PLY usually has Z‑up; three.js is Y‑up)
+    mesh.rotation.x = Math.PI;
 
-      // 7.4 Start the render loop
-      animate(mesh);
-    },
-    xhr => console.log(`PLY Load ${(xhr.loaded/xhr.total*100).toFixed(1)}%`),
-    err => console.error('Error loading PLY:', err)
-  );
+    // 5. (Re‑)compute bounds & auto‑frame as before
+    const bbox   = new THREE.Box3().setFromObject(mesh);
+    const center = bbox.getCenter(new THREE.Vector3());
+    const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
+
+    camera.position.copy(
+      center.clone().add(new THREE.Vector3(0, radius * 1.5, radius * 1.5))
+    );
+    camera.lookAt(center);
+
+    // 6. Add to scene & animate
+    scene.add(mesh);
+    animate(mesh);
+  },
+  xhr => console.log(`PLY Load ${(xhr.loaded/xhr.total*100).toFixed(1)}%`),
+  err => console.error('Error loading PLY:', err)
+);
 
   // ─── 8. Render Loop ─────────────────────────────────────────────────
   function animate(model) {
