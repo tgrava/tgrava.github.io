@@ -44,23 +44,34 @@ function initAvatar() {
   scene.add(new THREE.AxesHelper(1));
 
   // 7. Load PLY model
-  const loader = new PLYLoader();
-  loader.load(
-    '/assets/models/dog2.ply',
-    geometry => {
-      const material = new THREE.MeshStandardMaterial({ color: 0x888888 });
-      const mesh     = new THREE.Mesh(geometry, material);
+loader.load(
+  '/assets/models/dog2.ply',
+  geometry => {
+    geometry.computeVertexNormals();
 
-      geometry.computeBoundingBox();
-      geometry.center();
-      mesh.scale.set(0.01, 0.01, 0.01);
+    const material = new THREE.MeshNormalMaterial();
+    const mesh     = new THREE.Mesh(geometry, material);
 
-      scene.add(mesh);
-      animate(mesh);
-    },
-    xhr => console.log(`PLY Load ${(xhr.loaded / xhr.total * 100).toFixed(1)}%`),
-    err => console.error('Error loading PLY:', err)
-  );
+    // temporarily disable center/scale
+    // geometry.center();
+    // mesh.scale.set(0.01, 0.01, 0.01);
+
+    scene.add(mesh);
+
+    // debug bounding box & reframe camera
+    const bbox   = new THREE.Box3().setFromObject(mesh);
+    const center = bbox.getCenter(new THREE.Vector3());
+    const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
+    console.log('BBox:', bbox.min, bbox.max);
+
+    camera.position.copy(center.clone().add(new THREE.Vector3(0, radius * 2, radius * 2)));
+    camera.lookAt(center);
+
+    animate(mesh);
+  },
+  xhr => console.log(`PLY Load ${(xhr.loaded/xhr.total*100).toFixed(1)}%`),
+  err => console.error('Error loading PLY:', err)
+);
 
   // 8. Animation loop
   function animate(model) {
