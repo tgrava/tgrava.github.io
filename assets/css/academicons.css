@@ -20,6 +20,8 @@
   width: 100%;
   height: auto;
   display: block;
+  margin-left: -10px;
+
 }
 
 .ai {
