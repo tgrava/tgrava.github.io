@@ -1,100 +1,94 @@
 // assets/js/profile-3d.js
-import * as THREE    from 'three';
-import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader';
+import * as THREE          from 'three';
+import { PLYLoader }       from 'three/examples/jsm/loaders/PLYLoader';
+import { OrbitControls }   from 'three/examples/jsm/controls/OrbitControls';
 
 window.addEventListener('DOMContentLoaded', initAvatar);
 
 function initAvatar() {
-  // 1. Grab the canvas
-  const canvas = document.getElementById('avatar-canvas');
-  if (!canvas) {
-    console.error('avatar-canvas element not found');
-    return;
-  }
-
-  // 2. Renderer
+  // Canvas & Renderer
+  const canvas   = document.getElementById('avatar-canvas');
+  if (!canvas) return console.error('avatar-canvas element not found');
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
 
-  // 3. Scene & Camera
+  // Scene & Camera
   const scene  = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
   camera.position.set(0, 1, 3);
 
-  // 4. Lights (you can remove these once you switch to MeshBasicMaterial)
+  // Lights
   scene.add(new THREE.AmbientLight(0xffffff, 0.5));
   const dirLight = new THREE.DirectionalLight(0xffffff, 1);
   dirLight.position.set(5, 10, 7);
   scene.add(dirLight);
 
-  // 5. Helpers (optional)
-  scene.add(new THREE.GridHelper(5, 10));
+  // OPTIONAL: remove or keep axes helper
   scene.add(new THREE.AxesHelper(1));
 
-  // 6. Resize handling
-  function resizeRenderer() {
-    const width  = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    if (canvas.width !== width || canvas.height !== height) {
-      renderer.setSize(width, height, false);
-      camera.aspect = width / height;
+  // Resize handling
+  function resize() {
+    const w = canvas.clientWidth,
+          h = canvas.clientHeight;
+    if (canvas.width !== w || canvas.height !== h) {
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
     }
   }
-  window.addEventListener('resize', resizeRenderer);
-  resizeRenderer();
+  window.addEventListener('resize', resize);
+  resize();
 
-  // 7. Load the PLY
+  // OrbitControls for interactive rotation
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;       // smooths movement
+  controls.dampingFactor  = 0.1;
+  controls.screenSpacePanning = false;
+  controls.minDistance = 0.5;          // how close you can zoom
+  controls.maxDistance = 10;           // how far you can zoom
+
+  // Load the PLY as a point cloud
   const loader = new PLYLoader();
   loader.load(
-  '/assets/models/dog2.ply',
-  geometry => {
-    // Flip if you still need to correct orientation
-    geometry.rotateX(Math.PI);
+    '/assets/models/dog2.ply',
+    geometry => {
+      geometry.rotateX(Math.PI);       // flip if needed
 
-    // Scale colors up if you post‑scaled them (see earlier discussion),
-    // otherwise skip this if your PLY uses uchar colors.
-    const colorAttr = geometry.getAttribute('color');
-    if (colorAttr) {
-      for (let i = 0; i < colorAttr.array.length; i++) {
-        colorAttr.array[i] *= 255;
+      // If your PLY uses float colors, post‑scale them:
+      const colorAttr = geometry.getAttribute('color');
+      if (colorAttr) {
+        for (let i = 0; i < colorAttr.array.length; i++) {
+          colorAttr.array[i] *= 255;
+        }
+        colorAttr.needsUpdate = true;
       }
-      colorAttr.needsUpdate = true;
-    }
 
-    // Use a PointsMaterial instead of a Mesh material
-    const material = new THREE.PointsMaterial({
-      size: 0.01,           // adjust to taste
-      vertexColors: true    // use your red/green/blue attributes
-    });
+      const material = new THREE.PointsMaterial({
+        size: 0.01,
+        vertexColors: true
+      });
+      const points = new THREE.Points(geometry, material);
+      scene.add(points);
 
-    // Create a Points object instead of a Mesh
-    const points = new THREE.Points(geometry, material);
-    scene.add(points);
+      // Auto‑frame the camera on the point cloud
+      const bbox   = new THREE.Box3().setFromObject(points);
+      const center = bbox.getCenter(new THREE.Vector3());
+      const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
+      camera.position.copy(
+        center.clone().add(new THREE.Vector3(0, radius * 0.7, radius * 2.2))
+      );
+      camera.lookAt(center);
 
-    // Auto‑frame camera if you like
-    const bbox   = new THREE.Box3().setFromObject(points);
-    const center = bbox.getCenter(new THREE.Vector3());
-    const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
-    camera.position.copy(center.clone().add(new THREE.Vector3(0, radius * 0.7, radius * 2)));
-    camera.lookAt(center);
-
-    // Render loop (points will spin just like a mesh)
-    (function animate() {
-      requestAnimationFrame(animate);
-      points.rotation.y += 0.005;
-      renderer.render(scene, camera);
-    })();
-  },
-  xhr => console.log(`PLY Load ${(xhr.loaded/xhr.total*100).toFixed(1)}%`),
-  err => console.error('Error loading PLY:', err)
-);
-
-
-  // 8. Render loop
-  function animate(model) {
-    requestAnimationFrame(() => animate(model));
-    model.rotation.y += 0.005;
-    renderer.render(scene, camera);
-  }
+      // Start the loop
+      animate();
+      
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();            // required for damping
+        renderer.render(scene, camera);
+      }
+    },
+    xhr => console.log(`PLY ${(xhr.loaded/xhr.total*100).toFixed(1)}%`),
+    err => console.error(err)
+  );
 }
