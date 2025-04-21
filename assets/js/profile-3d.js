@@ -1,14 +1,15 @@
 // assets/js/profile-3d.js
-import * as THREE          from 'three';
-import { PLYLoader }       from 'three/examples/jsm/loaders/PLYLoader';
-import { OrbitControls }   from 'three/examples/jsm/controls/OrbitControls';
+import * as THREE        from 'three';
+import { PLYLoader }     from 'three/examples/jsm/loaders/PLYLoader';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 window.addEventListener('DOMContentLoaded', initAvatar);
 
 function initAvatar() {
-  // Canvas & Renderer
-  const canvas   = document.getElementById('avatar-canvas');
+  const canvas = document.getElementById('avatar-canvas');
   if (!canvas) return console.error('avatar-canvas element not found');
+
+  // Renderer
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
 
@@ -23,38 +24,38 @@ function initAvatar() {
   dirLight.position.set(5, 10, 7);
   scene.add(dirLight);
 
-  // OPTIONAL: remove or keep axes helper
-  scene.add(new THREE.AxesHelper(1));
+  // ── NO more axes helper ──
+  // scene.add(new THREE.AxesHelper(1));
 
   // Resize handling
-  function resize() {
-    const w = canvas.clientWidth,
-          h = canvas.clientHeight;
+  const resize = () => {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
     if (canvas.width !== w || canvas.height !== h) {
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
     }
-  }
+  };
   window.addEventListener('resize', resize);
   resize();
 
-  // OrbitControls for interactive rotation
+  // OrbitControls with auto‐rotation on
   const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;       // smooths movement
-  controls.dampingFactor  = 0.1;
-  controls.screenSpacePanning = false;
-  controls.minDistance = 0.5;          // how close you can zoom
-  controls.maxDistance = 10;           // how far you can zoom
+  controls.enableDamping     = true;
+  controls.dampingFactor      = 0.1;
+  controls.autoRotate         = true;      // turn on auto‐rotate
+  controls.autoRotateSpeed    = 1.0;       // adjust speed to taste
+  controls.enableZoom         = true;
+  controls.enablePan          = false;
 
-  // Load the PLY as a point cloud
+  // Load PLY as point cloud (same as before)
   const loader = new PLYLoader();
   loader.load(
     '/assets/models/dog2.ply',
     geometry => {
-      geometry.rotateX(Math.PI);       // flip if needed
+      geometry.rotateX(Math.PI);
 
-      // If your PLY uses float colors, post‑scale them:
+      // if needed, upscale float colors to uchar
       const colorAttr = geometry.getAttribute('color');
       if (colorAttr) {
         for (let i = 0; i < colorAttr.array.length; i++) {
@@ -70,25 +71,23 @@ function initAvatar() {
       const points = new THREE.Points(geometry, material);
       scene.add(points);
 
-      // Auto‑frame the camera on the point cloud
+      // auto‐frame camera
       const bbox   = new THREE.Box3().setFromObject(points);
       const center = bbox.getCenter(new THREE.Vector3());
       const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
       camera.position.copy(
-        center.clone().add(new THREE.Vector3(0, radius * 0.7, radius * 2.2))
+        center.clone().add(new THREE.Vector3(0, radius * 0.5, radius * 2.3))
       );
       camera.lookAt(center);
 
-      // Start the loop
-      animate();
-      
-      function animate() {
+      // Render loop: controls.autoRotate will spin, user can intervene
+      (function animate() {
         requestAnimationFrame(animate);
-        controls.update();            // required for damping
+        controls.update();
         renderer.render(scene, camera);
-      }
+      })();
     },
     xhr => console.log(`PLY ${(xhr.loaded/xhr.total*100).toFixed(1)}%`),
-    err => console.error(err)
+    err => console.error('Error loading PLY:', err)
   );
 }
