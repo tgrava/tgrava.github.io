@@ -47,60 +47,49 @@ function initAvatar() {
   // 7. Load the PLY
   const loader = new PLYLoader();
   loader.load(
-    '/assets/models/dog2.ply',
+  '/assets/models/dog2.ply',
+  geometry => {
+    // Flip if you still need to correct orientation
+    geometry.rotateX(Math.PI);
 
-    // onLoad callback
-    geometry => {
-      // compute normals (some PLYs lack them)
-      geometry.computeVertexNormals();
-
-      // check for color attribute
-      if (!geometry.hasAttribute('color')) {
-        console.warn(
-          'PLY has no color attribute;',
-          'available attributes:',
-          Object.keys(geometry.attributes)
-        );
+    // Scale colors up if you post‑scaled them (see earlier discussion),
+    // otherwise skip this if your PLY uses uchar colors.
+    const colorAttr = geometry.getAttribute('color');
+    if (colorAttr) {
+      for (let i = 0; i < colorAttr.array.length; i++) {
+        colorAttr.array[i] *= 255;
       }
-
-      // use an unlit material to show raw vertex colors
-      const material = new THREE.MeshBasicMaterial({
-        vertexColors: true,
-        side: THREE.DoubleSide
-      });
-
-      const mesh = new THREE.Mesh(geometry, material);
-
-      // flip model right‑side up (PLY is usually Z‑up, three.js is Y‑up)
-      mesh.rotation.x = Math.PI;
-
-      // add to scene
-      scene.add(mesh);
-
-      // auto‑frame camera based on bounding box
-      const bbox   = new THREE.Box3().setFromObject(mesh);
-      const center = bbox.getCenter(new THREE.Vector3());
-      const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
-
-      camera.position.copy(
-        center.clone().add(new THREE.Vector3(0, radius * 1.5, radius * 1.5))
-      );
-      camera.lookAt(center);
-
-      // start rendering
-      animate(mesh);
-    },
-
-    // onProgress callback
-    xhr => {
-      console.log(`PLY Load ${(xhr.loaded / xhr.total * 100).toFixed(1)}%`);
-    },
-
-    // onError callback
-    err => {
-      console.error('Error loading PLY:', err);
+      colorAttr.needsUpdate = true;
     }
-  );
+
+    // Use a PointsMaterial instead of a Mesh material
+    const material = new THREE.PointsMaterial({
+      size: 0.01,           // adjust to taste
+      vertexColors: true    // use your red/green/blue attributes
+    });
+
+    // Create a Points object instead of a Mesh
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    // Auto‑frame camera if you like
+    const bbox   = new THREE.Box3().setFromObject(points);
+    const center = bbox.getCenter(new THREE.Vector3());
+    const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
+    camera.position.copy(center.clone().add(new THREE.Vector3(0, radius * 1.5, radius * 1.5)));
+    camera.lookAt(center);
+
+    // Render loop (points will spin just like a mesh)
+    (function animate() {
+      requestAnimationFrame(animate);
+      points.rotation.y += 0.005;
+      renderer.render(scene, camera);
+    })();
+  },
+  xhr => console.log(`PLY Load ${(xhr.loaded/xhr.total*100).toFixed(1)}%`),
+  err => console.error('Error loading PLY:', err)
+);
+
 
   // 8. Render loop
   function animate(model) {
