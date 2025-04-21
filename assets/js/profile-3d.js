@@ -76,7 +76,7 @@ function initAvatar() {
     const bbox   = new THREE.Box3().setFromObject(points);
     const center = bbox.getCenter(new THREE.Vector3());
     const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
-    camera.position.copy(center.clone().add(new THREE.Vector3(0, radius * 1.5, radius * 1)));
+    camera.position.copy(center.clone().add(new THREE.Vector3(0, radius * 1, radius * 1.5)));
     camera.lookAt(center);
 
     // Render loop (points will spin just like a mesh)
