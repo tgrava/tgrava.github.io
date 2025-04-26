@@ -39,7 +39,7 @@ function initAvatar() {
   function resize() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
     if (canvas.width !== w || canvas.height !== h) {
-      renderer.setSize(w, h, true);
+      renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
     }
