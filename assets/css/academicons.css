@@ -17,10 +17,9 @@
 }
 
 .author__avatar canvas {
-  width: 100%;
+  width: 120%;
   height: auto;
   display: block;
-  transform: translateX(-10%);
 
 }
 
