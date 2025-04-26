@@ -22,8 +22,8 @@ function initAvatar() {
 
   // 2. Scene & Camera
   const scene  = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 200);
-  camera.position.set(0, 1, -100);
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.set(0, 1, -1000);
 
   // 3. Lights
   scene.add(new THREE.AmbientLight(0xffffff, 1.5));
