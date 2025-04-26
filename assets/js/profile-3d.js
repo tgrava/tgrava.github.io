@@ -78,7 +78,7 @@ function initAvatar() {
       // Your Blender coords; invert Y/Z if needed after flipping the model
       smokeMesh.position.set(
         0.25129,    // X
-        0.0,   // Y
+        0.154452,   // Y
         0.07226    // Z
       );
       model.add(smokeMesh);
