@@ -76,7 +76,7 @@ function initAvatar() {
       // 7. Create smoke mesh and attach to model
       const smokeMesh = createSmokeMesh(radius);
       // your new Blender coordinates (relative to model origin):
-      smokeMesh.position.set(0.25129, 0.104452, -0.10226);
+      smokeMesh.position.set(0.25129, 0.204452, -0.10226);
       model.add(smokeMesh);
 
       // 8. Render loop with continuous smoke and auto-rotate
