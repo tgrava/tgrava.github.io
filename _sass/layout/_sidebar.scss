@@ -81,29 +81,22 @@
    ========================================================================== */
 
 .author__avatar {
-  display: table-cell;
-  vertical-align: top;
+  // container stays whatever you had...
+  width: 36px;
+  height: auto;
 
-  // Mobile: fixed 36×36 box
-  width:  36px;
-  height: 36px;
-
-  // Make the canvas fill that box exactly:
+  // always force the canvas to 250px tall
   canvas {
-    width:  100% !important;
-    height: 100% !important;
+    width: 100% !important;
+    height: 250px !important;
     display: block;
   }
 
-  // Desktop (and larger tablets), go back to auto‐sizing
   @include breakpoint($large) {
-    display: block;
-    width:  100%;
-    height: unset;
-
+    // same on desktop
     canvas {
       width: 100% !important;
-      height: auto   !important;
+      height: 250px !important;
     }
   }
 
