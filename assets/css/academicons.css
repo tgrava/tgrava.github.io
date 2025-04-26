@@ -23,6 +23,11 @@
 
 }
 
+@media (max-width: 600px) {
+  .author__avatar canvas {
+    height: 36px !important;  // double the 18px, or whatever you prefer
+  }
+
 .ai {
   font-family: 'Academicons';
   font-weight: 400;
