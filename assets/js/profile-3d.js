@@ -23,7 +23,7 @@ function initAvatar() {
   // 2. Scene & Camera
   const scene  = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-  camera.position.set(0, 1000, -100);
+  camera.position.set(0, 1, -10);
 
   // 3. Lights
   scene.add(new THREE.AmbientLight(0xffffff, 1.5));
@@ -69,7 +69,7 @@ function initAvatar() {
       const center = bbox.getCenter(new THREE.Vector3());
       const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
       camera.position.copy(
-        center.clone().add(new THREE.Vector3(0, radius * 0.5, radius * 1))
+        center.clone().add(new THREE.Vector3(0, radius * 0.4, radius * 1.2))
       );
       camera.lookAt(center);
 
