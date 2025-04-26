@@ -76,7 +76,7 @@ function initAvatar() {
       // 7. Create smoke mesh and attach to model
       const smokeMesh = createSmokeMesh(radius);
       // your new Blender coordinates (relative to model origin):
-      smokeMesh.position.set(0.25129, 0.104452, -0.25226);
+      smokeMesh.position.set(0.25129, 0.074452, -0.07226);
       model.add(smokeMesh);
 
       // 8. Render loop with continuous smoke and auto-rotate
@@ -153,7 +153,7 @@ function initAvatar() {
     geo.translate(0, 0.5, 0);
     // size it narrowly and short:
     const smokeWidth  = radius * 0.4; // ~40% of mug radius
-    const smokeHeight = radius * 1.1; // twice the mug radius
+    const smokeHeight = radius * 2.0; // twice the mug radius
     geo.scale(smokeWidth, smokeHeight, 1);
 
     return new THREE.Mesh(geo, mat);
