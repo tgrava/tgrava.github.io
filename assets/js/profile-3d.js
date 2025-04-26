@@ -69,7 +69,7 @@ function initAvatar() {
       const center = bbox.getCenter(new THREE.Vector3());
       const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
       camera.position.copy(
-        center.clone().add(new THREE.Vector3(0, radius * 0.5, radius * 2.3))
+        center.clone().add(new THREE.Vector3(0, radius * 0.5, radius * 1))
       );
       camera.lookAt(center);
 
