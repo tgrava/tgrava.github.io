@@ -6,36 +6,42 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 window.addEventListener('DOMContentLoaded', initAvatar);
 
 function initAvatar() {
-  // 1. Grab the canvas
+  // 1. Canvas & Renderer
   const canvas = document.getElementById('avatar-canvas');
   if (!canvas) {
     console.error('avatar-canvas element not found');
     return;
   }
-
-  // 2. Renderer
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true
+  });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
+  renderer.toneMappingExposure = 2.0;  // boost exposure
 
-  // 3. Scene & Camera
+  // 2. Scene & Camera
   const scene  = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
   camera.position.set(0, 1, 3);
 
-  // 4. Lights
-  // bright ambient
-  scene.add(new THREE.AmbientLight(0xffffff, 1.0));
-  // hemisphere for soft sky/fill
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1.0));
-  // single directional for contrast
-  const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
+  // 3. Lights
+  // brighter ambient
+  scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+  // hemisphere for soft fill
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1.2));
+  // stronger directional key light
+  const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
   dirLight.position.set(5, 10, 7);
   scene.add(dirLight);
+  // a fill light stuck to the camera for front-lighting
+  const fillLight = new THREE.PointLight(0xffffff, 0.5);
+  camera.add(fillLight);
+  scene.add(camera);
 
-  // 5. Resize handling
+  // 4. Resize handling
   function resize() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
     if (canvas.width !== w || canvas.height !== h) {
@@ -47,28 +53,28 @@ function initAvatar() {
   window.addEventListener('resize', resize);
   resize();
 
-  // 6. OrbitControls with auto‐rotate
+  // 5. Controls (auto-rotate + user interaction)
   const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping      = true;
-  controls.dampingFactor       = 0.1;
-  controls.autoRotate          = true;
-  controls.autoRotateSpeed     = 1.0;
-  controls.enableZoom          = true;
-  controls.enablePan           = false;
+  controls.enableDamping    = true;
+  controls.dampingFactor     = 0.1;
+  controls.autoRotate        = true;
+  controls.autoRotateSpeed   = 1.0;
+  controls.enableZoom        = true;
+  controls.enablePan         = false;
 
-  // 7. Load GLB via GLTFLoader
+  // 6. Load GLB
   const loader = new GLTFLoader();
   loader.load(
     '/assets/models/dog2.glb',
     gltf => {
       const model = gltf.scene;
 
-      // flip model right‐side up (GLTF is Z-up)
+      // flip right-side-up (GLTF uses Z-up)
       model.rotation.x = Math.PI;
 
       scene.add(model);
 
-      // auto‐frame camera on the model
+      // auto-frame camera
       const bbox   = new THREE.Box3().setFromObject(model);
       const center = bbox.getCenter(new THREE.Vector3());
       const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
@@ -78,7 +84,7 @@ function initAvatar() {
       );
       camera.lookAt(center);
 
-      // 8. Render loop: autoRotate + user controls
+      // 7. Render loop
       (function animate() {
         requestAnimationFrame(animate);
         controls.update();
