@@ -99,11 +99,11 @@
   @include breakpoint($large) {
     display: block;
     width:  auto;
-    height: auto;
+    height: 250px;
 
     canvas {
       width: 100% !important;
-      height: auto   !important;
+      height: 100%   !important;
     }
   }
 
