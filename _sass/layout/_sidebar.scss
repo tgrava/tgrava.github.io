@@ -83,14 +83,28 @@
 .author__avatar {
   display: table-cell;
   vertical-align: top;
-  width: 36px;
-  // set width only, for non-square avatars
-  // height: 36px;
 
+  // Mobile: fixed 36×36 box
+  width:  36px;
+  height: 36px;
+
+  // Make the canvas fill that box exactly:
+  canvas {
+    width:  100% !important;
+    height: 100% !important;
+    display: block;
+  }
+
+  // Desktop (and larger tablets), go back to auto‐sizing
   @include breakpoint($large) {
     display: block;
-    width: auto;
+    width:  auto;
     height: auto;
+
+    canvas {
+      width: 100% !important;
+      height: auto   !important;
+    }
   }
 
   img {

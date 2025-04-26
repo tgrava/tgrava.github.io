@@ -16,18 +16,6 @@
         url('../fonts/academicons.svg') format('svg');
 }
 
-.author__avatar canvas {
-  width: 100%;
-  height: auto;
-  display: block;
-
-}
-
-@media (max-width: 600px) {
-  .author__avatar canvas {
-    height: 36px !important;  // double the 18px, or whatever you prefer
-  }
-
 .ai {
   font-family: 'Academicons';
   font-weight: 400;
