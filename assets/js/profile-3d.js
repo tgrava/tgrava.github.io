@@ -75,10 +75,10 @@ function initAvatar() {
 
       // 7. Add the smoke mesh as a child so it always stays on the cup
       const smokeMesh = createSmokeMesh(radius);
-      // Your Blender coords; invert Y/Z if needed after flipping the model
+      // BE CAREFULL THAT The Y is actually the Z in Blender, and the Z is the Y !!!!!
       smokeMesh.position.set(
         0.25129,    // X
-        0.154452,   // Y
+        0.174452,   // Y
         0.0    // Z
       );
       model.add(smokeMesh);
