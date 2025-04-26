@@ -8,7 +8,10 @@ window.addEventListener('DOMContentLoaded', initAvatar);
 function initAvatar() {
   // 1. Canvas & Renderer
   const canvas = document.getElementById('avatar-canvas');
-  if (!canvas) return console.error('avatar-canvas element not found');
+  if (!canvas) {
+    console.error('avatar-canvas element not found');
+    return;
+  }
 
   const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -47,7 +50,7 @@ function initAvatar() {
   window.addEventListener('resize', resize);
   resize();
 
-  // 5. Controls
+  // 5. Controls (auto-rotate + interaction)
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping    = true;
   controls.dampingFactor     = 0.1;
@@ -56,25 +59,26 @@ function initAvatar() {
   controls.enableZoom        = true;
   controls.enablePan         = false;
 
-  // 6. Load GLB
+  // 6. Load the GLB model
   const loader = new GLTFLoader();
   loader.load(
     '/assets/models/dog2.glb',
     gltf => {
       const model = gltf.scene;
-      model.rotation.x = Math.PI;  // flip Z-up → Y-up
+      // Flip Z-up → Y-up
+      model.rotation.x = Math.PI;
       scene.add(model);
 
-      // compute model's bounding box
-      const bbox = new THREE.Box3().setFromObject(model);
-      const min  = bbox.min, max = bbox.max;
+      // Compute bounding box to find top center
+      const bbox      = new THREE.Box3().setFromObject(model);
+      const min       = bbox.min, max = bbox.max;
       const topCenter = new THREE.Vector3(
         (min.x + max.x) / 2,
         max.y,
         (min.z + max.z) / 2
       );
 
-      // Position camera relative to model
+      // Auto-frame camera around model
       const center = bbox.getCenter(new THREE.Vector3());
       const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
       camera.position.copy(
@@ -82,10 +86,10 @@ function initAvatar() {
       );
       camera.lookAt(center);
 
-      // add smoke at topCenter
+      // Add the smoke plume at the top center
       addSmoke(topCenter, radius);
 
-      // render loop
+      // Render loop
       (function animate() {
         requestAnimationFrame(animate);
         controls.update();
@@ -96,16 +100,16 @@ function initAvatar() {
     err => console.error('Error loading GLB:', err)
   );
 
-  // 7. Smoke function
+  // 7. Smoke setup
   function addSmoke(position, radius) {
-    // load perlin
+    // 7.1 Load Perlin noise texture from /images
     const texLoader = new THREE.TextureLoader();
     const perlinTex = texLoader.load(
-      '{{ "/images/perlin.png" | relative_url }}',
+      '/images/perlin.png',
       tex => { tex.wrapS = tex.wrapT = THREE.RepeatWrapping; }
     );
 
-    // shaders
+    // 7.2 Shader code for the smoke
     const vs = `
       varying vec2 vUv;
       uniform float uTime;
@@ -135,11 +139,12 @@ function initAvatar() {
         a = smoothstep(0.3,1.0,a);
         a *= smoothstep(0.0,0.1,uv.x) * smoothstep(1.0,0.9,uv.x);
         a *= smoothstep(0.0,0.1,uv.y) * smoothstep(1.0,0.4,uv.y);
+        // dark gray smoke
         gl_FragColor = vec4(vec3(0.2), a * 0.6);
       }
     `;
 
-    // material
+    // 7.3 Create ShaderMaterial
     const smokeMat = new THREE.ShaderMaterial({
       vertexShader:   vs,
       fragmentShader: fs,
@@ -152,19 +157,18 @@ function initAvatar() {
       }
     });
 
-    // geometry
+    // 7.4 Smoke plane geometry
     const smokeGeo = new THREE.PlaneGeometry(1, 1, 16, 64);
     smokeGeo.translate(0, 0.5, 0);
-    smokeGeo.scale(2, radius * 1.5, 1); // height scales with model
+    smokeGeo.scale(2, radius * 1.5, 1);
 
-    // mesh
+    // 7.5 Mesh & position
     const smokeMesh = new THREE.Mesh(smokeGeo, smokeMat);
     smokeMesh.position.copy(position).add(new THREE.Vector3(0, radius * 0.1, 0));
-    smokeMesh.lookAt(camera.position); // face camera
-
+    smokeMesh.lookAt(camera.position);
     scene.add(smokeMesh);
 
-    // animate time
+    // 7.6 Animate the smoke
     const clock = new THREE.Clock();
     (function tick() {
       smokeMat.uniforms.uTime.value = clock.getElapsedTime();
