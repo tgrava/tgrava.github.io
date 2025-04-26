@@ -73,17 +73,24 @@ function initAvatar() {
       );
       camera.lookAt(center);
 
-      // 7. Add the smoke mesh as a child so it always stays on the cup
+      // 7. Add the smoke mesh
       const smokeMesh = createSmokeMesh(radius);
-      // BE CAREFULL THAT The Y is actually the Z in Blender, and the Z is the Y !!!!!
-      smokeMesh.position.set(
-        0.25129,    // X
-        0.174452,   // Y
-        0.0    // Z
-      );
+      // KEEP your Blender‐derived coords (note Y & Z axis swap comment)
+      smokeMesh.position.set(0.25129, 0.174452, 0.0);
       model.add(smokeMesh);
 
-      // 8. Render loop: update smoke time, face camera, auto-rotate
+      // 8. Theme‐toggle listener to update smoke color
+      function updateSmokeColor() {
+        const css = getComputedStyle(document.documentElement).getPropertyValue('--smoke-color').trim();
+        const [r,g,b] = css.split(',').map(s => parseFloat(s));
+        smokeMesh.material.uniforms.uSmokeColor.value.set(r, g, b);
+      }
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        requestAnimationFrame(updateSmokeColor);
+      });
+      updateSmokeColor();
+
+      // 9. Render loop
       const clock = new THREE.Clock();
       (function animate() {
         const t = clock.getElapsedTime();
@@ -98,14 +105,12 @@ function initAvatar() {
     err => console.error('Error loading GLB:', err)
   );
 
-  // 9. Builds a smoke mesh that loops forever at constant size
+  // 10. Builds a smoke mesh that loops forever at constant size
   function createSmokeMesh(radius) {
-    // Load your Perlin noise texture from /images
     const tex = new THREE.TextureLoader().load('/images/perlin.png', t => {
       t.wrapS = t.wrapT = THREE.RepeatWrapping;
     });
 
-    // Vertex Shader (unchanged)
     const vs = `
       varying vec2 vUv;
       uniform float uTime;
@@ -124,29 +129,23 @@ function initAvatar() {
         gl_Position = projectionMatrix * modelViewMatrix * vec4(p,1.0);
       }
     `;
-
-    // Fragment Shader with UV wrapping via fract()
     const fs = `
       varying vec2 vUv;
       uniform float uTime;
       uniform sampler2D uPerlin;
+      uniform vec3 uSmokeColor;
       void main(){
-        // tile the smoke texture instead of scrolling off
         vec2 uv = vUv;
         float speed = 0.02;
         uv.y = fract(uv.y - uTime * speed);
-
         float a = texture(uPerlin, uv).r;
         a = smoothstep(0.3,1.0,a);
         a *= smoothstep(0.0,0.1,uv.x) * smoothstep(1.0,0.9,uv.x);
         a *= smoothstep(0.0,0.1,uv.y) * smoothstep(1.0,0.4,uv.y);
-
-        // dark gray smoke, constant size
-        gl_FragColor = vec4(vec3(0.2), a * 0.6);
+        gl_FragColor = vec4(uSmokeColor, a * 0.6);
       }
     `;
 
-    // Shader material
     const mat = new THREE.ShaderMaterial({
       vertexShader:   vs,
       fragmentShader: fs,
@@ -154,15 +153,14 @@ function initAvatar() {
       depthWrite:     false,
       side:           THREE.DoubleSide,
       uniforms: {
-        uTime:   { value: 0 },
-        uPerlin: { value: tex }
+        uTime:       { value: 0 },
+        uPerlin:     { value: tex },
+        uSmokeColor: { value: new THREE.Color(0.2,0.2,0.2) }
       }
     });
 
-    // Smoke plane geometry (constant size relative to your mug)
     const geo = new THREE.PlaneGeometry(1, 1, 16, 64);
     geo.translate(0, 0.5, 0);
-    // Adjust these to taste:
     const smokeWidth  = radius * 0.4;  // ~40% of mug radius
     const smokeHeight = radius * 1.0;  // equal to mug radius
     geo.scale(smokeWidth, smokeHeight, 1);
