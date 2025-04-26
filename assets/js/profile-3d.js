@@ -79,7 +79,7 @@ function initAvatar() {
       smokeMesh.position.set(
         0.25129,    // X
         0.154452,   // Y
-        0.07226    // Z
+        0.17226    // Z
       );
       model.add(smokeMesh);
 
