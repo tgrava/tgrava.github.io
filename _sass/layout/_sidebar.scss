@@ -98,8 +98,8 @@
   // Desktop (and larger tablets), go back to auto‐sizing
   @include breakpoint($large) {
     display: block;
-    width:  auto;
-    height: auto;
+    width:  100%;
+    height: unset;
 
     canvas {
       width: 100% !important;
