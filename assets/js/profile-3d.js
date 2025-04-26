@@ -56,7 +56,7 @@ function initAvatar() {
   controls.enableZoom        = true;
   controls.enablePan         = false;
 
-  // 6. Load GLB
+  // 6. Load GLB model
   new GLTFLoader().load(
     '/assets/models/dog2.glb',
     gltf => {
@@ -64,7 +64,7 @@ function initAvatar() {
       model.rotation.x = Math.PI; // flip Z-up → Y-up
       scene.add(model);
 
-      // frame camera
+      // frame the camera
       const bbox   = new THREE.Box3().setFromObject(model);
       const center = bbox.getCenter(new THREE.Vector3());
       const radius = bbox.getBoundingSphere(new THREE.Sphere()).radius;
@@ -73,19 +73,18 @@ function initAvatar() {
       );
       camera.lookAt(center);
 
-      // 7. Smoke coords from Blender
-      const smokePos = new THREE.Vector3(0.28365, 0.011415, -0.17834);
-      // 8. Add smoke as child so it follows the model
+      // 7. Create smoke mesh and attach to model
       const smokeMesh = createSmokeMesh(radius);
-      smokeMesh.position.copy(smokePos).add(new THREE.Vector3(0, 0.02, 0)); // lift 2 cm
+      // your new Blender coordinates (relative to model origin):
+      smokeMesh.position.set(0.25129, 0.074452, -0.07226);
       model.add(smokeMesh);
 
-      // 9. Render loop
+      // 8. Render loop with continuous smoke and auto-rotate
       const clock = new THREE.Clock();
       (function animate() {
         const t = clock.getElapsedTime();
         smokeMesh.material.uniforms.uTime.value = t;
-        smokeMesh.lookAt(camera.position);
+        smokeMesh.lookAt(camera.position); // face the camera
         controls.update();
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
@@ -95,14 +94,14 @@ function initAvatar() {
     err => console.error('Error loading GLB:', err)
   );
 
-  // --- builds and returns a smoke mesh scaled to your radius ---
+  // 9. Helper to build the smoke mesh sized to your model radius
   function createSmokeMesh(radius) {
-    // load Perlin texture
+    // load Perlin noise texture
     const tex = new THREE.TextureLoader().load('/images/perlin.png', t => {
       t.wrapS = t.wrapT = THREE.RepeatWrapping;
     });
 
-    // shaders
+    // vertex shader
     const vs = `
       varying vec2 vUv;
       uniform float uTime;
@@ -114,13 +113,14 @@ function initAvatar() {
         float n = texture(uPerlin, vec2(uv.y*0.2, -uTime*0.01)).r;
         p.xz = rot(n*3.0)*p.xz;
         vec2 wind = vec2(
-          texture(uPerlin, vec2(0.3,-uTime*0.03)).r-0.5,
-          texture(uPerlin, vec2(0.7,-uTime*0.03)).r-0.5
+          texture(uPerlin, vec2(0.3, -uTime*0.03)).r - 0.5,
+          texture(uPerlin, vec2(0.7, -uTime*0.03)).r - 0.5
         );
         p.xz += wind * uv.y * 2.0;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(p,1.0);
       }
     `;
+    // fragment shader
     const fs = `
       varying vec2 vUv;
       uniform float uTime;
@@ -148,13 +148,12 @@ function initAvatar() {
       }
     });
 
-    // smoke plane geometry
+    // plane geometry
     const geo = new THREE.PlaneGeometry(1, 1, 16, 64);
     geo.translate(0, 0.5, 0);
-
-    // new smoke sizing: narrow & short
-    const smokeWidth  = radius * 0.4;  // 40% of mug radius
-    const smokeHeight = radius * 2.0;  // twice the mug radius
+    // size it narrowly and short:
+    const smokeWidth  = radius * 0.4; // ~40% of mug radius
+    const smokeHeight = radius * 2.0; // twice the mug radius
     geo.scale(smokeWidth, smokeHeight, 1);
 
     return new THREE.Mesh(geo, mat);
