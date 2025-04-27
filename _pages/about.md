@@ -13,7 +13,7 @@ Hi there.
 Do you see any difference?
 
 We live in an era of information.\
-Too much of it is produced by snake-oil merchants.\
+Much of it from snake-oil merchants.\
 I therefore seek to filter it efficiently.
  
 The way I process is to...\
