@@ -7,21 +7,22 @@ redirect_from:
   - /about.html
 ---
 
-No mission statement.  
 No big words.  
-Just work.
+Just tinkering.
 
 Find the edge.  
 Test it.  
 Break it.  
 Understand it.
 
-The map is not the territory.  
-The model is not the truth.  
-Marketing is not reality.
+What thou seekest, the old world hath already laid bare.
+Go thou and find it anew.
 
-If you get it, good, welcome.  
-If you don't, good, welcome.
+The data-generating process is not in or outside your model.
+De Finetti knew it. But marketing hid it."
+
+If you get it, welcome.  
+If you don't, welcome.
 
 **Polish hides, roughness reveals.**
 
