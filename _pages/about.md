@@ -8,14 +8,16 @@ redirect_from:
 ---
 Hi there.\
 *"I sell no houses, only beginnings,"* said the Real Estate agent.\
-*"I promise no truths, only probabilities,"* said the Truthful Statistician.\
+*"I promise no truths, only probabilities,"* said the Truthful Statistician.
+
 I promise nothing, I sell nothing, this is simply my repository.
 
 The way I process is to...\
 **I**nvert it.\
 **D**ecompose it.\
 **A**nalise it.\
-**Pro**totype it.\
+**Pro**totype it.
+
 Sounds like a reverse engineering story, doesn't it?
 
 I believe that...\
@@ -26,7 +28,6 @@ Ergo...\
 What thou seekest, the old world hath already laid bare.\
 Go thou and find it anew.
 
-If you get it, welcome.\
-If you don't, welcome.
+If you get it, welcome. If you don't, welcome.
 
 [Explore my projects](/portfolio) • [Read my blog](/blog) • [Get in touch](mailto:thomas.grava@uclouvain.be)
