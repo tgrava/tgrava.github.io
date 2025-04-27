@@ -6,11 +6,12 @@ redirect_from:
   - /about/
   - /about.html
 ---
-Hi there.\
-*"I sell no houses, only beginnings,"* said the Real Estate agent.\
-*"I promise no truths, only probabilities,"* said the Truthful Statistician.
+Hi there.
 
-I promise nothing, I sell nothing, this is simply my repository.
+*"I sell no houses, only beginnings,"* (a Real Estate agent).\
+*"I promise no truths, only probabilities,"* (a Truthful Statistician).
+
+I promise nothing, I sell nothing, this is a repository.
 
 The way I process is to...\
 **I**nvert it.\
@@ -21,12 +22,10 @@ The way I process is to...\
 Sounds like a reverse engineering story, doesn't it?
 
 I believe that...\
-The data-generating process is not in your model, nor outside it.\
-De Finetti knew it — but marketing hid it.
+The data-generating process is not in your model, nor outside it. De Finetti knew it — but marketing hid it.
 
 Ergo...\
-What thou seekest, the old world hath already laid bare.\
-Go thou and find it anew.
+What thou seekest, the old world hath already laid bare. Go thou and find it anew.
 
 If you get it, welcome. If you don't, welcome.
 
