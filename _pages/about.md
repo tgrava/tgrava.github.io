@@ -26,6 +26,4 @@ Ergo...\
 What thou seekest is already laid bare.\
 Go thou and find it anew.
 
-If you get it, welcome. If you don't, welcome.
-
 [Explore my projects](/portfolio) • [Read my blog](/blog) • [Get in touch](mailto:thomas.grava@uclouvain.be)
