@@ -7,9 +7,6 @@ redirect_from:
   - /about.html
 ---
 
-No big words.  
-Just tinkering.
-
 Find the edge.  
 Test it.  
 Break it.  
@@ -19,7 +16,7 @@ What thou seekest, the old world hath already laid bare.
 Go thou and find it anew.
 
 The data-generating process is not in or outside your model.
-De Finetti knew it. But marketing hid it."
+De Finetti knew it. But marketing hid it.
 
 If you get it, welcome.  
 If you don't, welcome.
