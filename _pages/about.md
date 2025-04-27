@@ -9,7 +9,7 @@ redirect_from:
 *Hi there.*\
 "I sell no houses, only beginnings," said the Real Estate agent.\
 "I promise no truths, only probabilities," said the Truthful Statistician.\
-Yet I have nothing to sell you.
+*I promise nothing, I sell you nothing, this is simply my repository.*
 
 *The way I process is to...*\
 **I**nvert it.\
