@@ -41,3 +41,19 @@
     "vendor/font-awesome/brands",
     "vendor/magnific-popup/magnific-popup"
 ;
+
+//
+// Responsive swap for About page:
+// hide the full version on small screens and show the minimal one
+//
+
+// hide the “min” version by default
+.about-min {
+  display: none;
+}
+
+// when viewport is phone-sized (≤640px), swap them
+@media screen and (max-width: 640px) {
+  .about-full { display: none !important; }
+  .about-min  { display: block  !important; }
+}
