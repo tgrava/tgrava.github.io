@@ -2,6 +2,9 @@
 permalink: /
 title: "On Uncertainty, Value & Intrusion"
 author_profile: true
+redirect_from: 
+  - /about/
+  - /about.html
 ---
 
 > “We model extremes because life lives on the tails.”  
