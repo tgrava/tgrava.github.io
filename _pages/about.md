@@ -2,13 +2,10 @@
 permalink: /
 title: "Caffeinated Introduction"
 author_profile: true
-redirect_from:
+redirect_from: 
   - /about/
   - /about.html
-layout: single
 ---
-
-<div class="about-full">
 Hi there.\
 *"I sell no houses, only beginnings,"* said the Real Estate agent.\
 *"I promise no truths, only probabilities,"* said the Truthful Statistician.
@@ -34,10 +31,3 @@ Go thou and find it anew.
 If you get it, welcome. If you don't, welcome.
 
 [Explore my projects](/portfolio) • [Read my blog](/blog) • [Get in touch](mailto:thomas.grava@uclouvain.be)
-</div>
-
-<div class="about-min">
-*"I sell no houses, only beginnings,"*…*“I promise no truths, only probabilities.”*  
-This is my repository.  
-[Projects](/portfolio) • [Blog](/blog) • [Contact](mailto:thomas.grava@uclouvain.be)
-</div>
