@@ -8,10 +8,6 @@ redirect_from:
 ---
 Hi there.
 
-*"I sell no houses, only beginnings,"*\
-*"I promise no truths, only probabilities,"*\
-Do you see any difference?
-
 We live in an era of information.\
 Much of it from snake-oil merchants.\
 I therefore seek to filter it efficiently.
