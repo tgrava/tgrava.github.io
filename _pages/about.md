@@ -14,7 +14,7 @@ I promise nothing, I sell nothing, this is simply my repository.
 The way I process is to...\
 **I**nvert it.\
 **D**ecompose it.\
-**A**utomate it.\
+**A**nalize it.\
 **Pro**totype it.\
 Sounds like a reverse engineering story, doesn't it?
 
