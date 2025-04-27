@@ -9,12 +9,13 @@ redirect_from:
 Hi there.
 "I sell no houses, only beginnings," said the Real Estate agent.  
 "I promise no truths, only probabilities," said the Truthful Statistician.
+Yet I have nothing to sell you.
 
 The way I process is to...  
 **I**nvert it.  
 **D**ecompose it.  
 **A**utomate it.  
-Sounds like reverse engineering, doesn't it?
+Sounds like a reverse engineering story, doesn't it?
 
 I believe that...
 The data-generating process is not in your model, nor outside it.  
