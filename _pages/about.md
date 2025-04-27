@@ -1,28 +1,31 @@
 ---
 permalink: /
-title: "On Uncertainty, Value & Intrusion"
+title: "Raw Input"
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
 
-> “We model extremes because life lives on the tails.”  
+No mission statement.  
+No big words.  
+Just work.
 
-I build tools for navigating uncertainty—whether in markets, machines, or masonry. My work sits at four crossroads:
+Find the edge.  
+Test it.  
+Break it.  
+Understand it.
 
-- **Statistics & Information Theory**  
-  From extreme‐value laws to conformal guarantees and list decoding bounds, I seek dependable inference where others see chaos.
+The map is not the territory.  
+The model is not the truth.  
+Marketing is not reality.
 
-- **Quantitative Finance**  
-  Pricing risk, stress-testing models, mining signals from noise—bridging theory and markets to understand what really moves prices.
+I study what doesn't want to be studied.  
+I look where prediction breaks.
 
-- **Reverse Engineering**  
-  ARM binaries are puzzles waiting to be unsolved. With IDA Pro and a hacker’s curiosity, I pry open closed systems and learn how they tick.
+If you get it, good.  
+If you don't, reality remains the same.
 
-- **Real-Estate Analytics & 3D Modelling**  
-  Predicting home values with spatial, economic, and structural cues—then visualizing it in three dimensions to reveal hidden drivers of price.
+**Truth is rough. That's why it's real.**
 
-No buzzwords. No hollow slogans—just code, data and ideas tested against reality.  
-Want to see the math, the hacks, or the models?  
-[Explore my projects](#/portfolio) • [Read my notes](#/blog) • [Get in touch](#/contact)
+[Explore my projects](/portfolio) • [Read my notes](/blog) • [Get in touch](/contact)
