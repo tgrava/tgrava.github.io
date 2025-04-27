@@ -20,10 +20,10 @@ The way I process is to...\
 **I**nvert it.\
 **D**ecompose it.\
 **A**nalise it.\
-**Pro**totype it.
+**Pro**totype it.\
 Sounds like a reverse engineering story, doesn't it?
 
-Forget about Nature's data-generating process.
+Forget about Nature's data-generating process.\
 De Finetti knew it — but marketing hid it.
 
 Ergo...\
