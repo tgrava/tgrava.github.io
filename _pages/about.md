@@ -16,13 +16,12 @@ The way I process is to...\
 **I**nvert it.\
 **D**ecompose it.\
 **A**nalise it.\
-**Pro**totype it.\
+**Pro**totype it.
 
 Ergo...\
 What thou seekest is already laid bare.\
 Go thou and find it anew.
 
-[Explore my projects](/portfolio) • [Read my blog](/blog) • [Get in touch](mailto:thomas.grava@uclouvain.be)
 ## My latest posts
 
 <span class="post-meta">April 28, 2025</span>\
