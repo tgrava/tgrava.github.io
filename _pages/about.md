@@ -23,11 +23,6 @@ What thou seekest is already laid bare.\
 Go thou and find it anew.
 
 [Explore my projects](/portfolio) • [Read my blog](/blog) • [Get in touch](mailto:thomas.grava@uclouvain.be)
-
-<br><br>
-
-<span class="post-meta">April 28, 2025</span>
-
-<br>
-
+##My latest posts
+<span class="post-meta">April 28, 2025</span>\
 <a class="post-link" href="/posts/2025/04/blog-post-1/">My ratatouille, or nothing.</a>
