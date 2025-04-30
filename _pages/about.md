@@ -17,13 +17,15 @@ The way I process is to...\
 **D**ecompose it.\
 **A**nalise it.\
 **Pro**totype it.\
-Sounds like a reverse engineering story, doesn't it?
-
-Forget about Nature's data-generating process.\
-De Finetti knew it — but marketing hid it.
 
 Ergo...\
 What thou seekest is already laid bare.\
 Go thou and find it anew.
 
 [Explore my projects](/portfolio) • [Read my blog](/blog) • [Get in touch](mailto:thomas.grava@uclouvain.be)
+
+span style="font-size: 0.8em; color: #888;">April 28, 2025</span>
+
+<br>
+
+<a href="/posts/2025/04/blog-post-1/" style="color: #007acc; text-decoration: underline; font-size: 1.2em;">My ratatouille, or nothing.</a>
