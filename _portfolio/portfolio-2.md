@@ -4,7 +4,6 @@ excerpt: "Enhancing real estate price estimation with environmental, infrastruct
 collection: portfolio
 category: real-estate
 permalink: /portfolio/real-estate-map-layers
-date: 2020-01-01
 ---
 In this project, we enrich real estate predictions by incorporating **geo-contextual layers** using open geographic data sources. 
 The idea is to be the Bloomberg of Real Estates, and to provide a GeoScore for a house that would inflate or deflate its price estimate.

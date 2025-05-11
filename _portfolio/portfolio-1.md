@@ -4,7 +4,6 @@ excerpt: "Xgboosting my way to estimate house prices based on a location, then m
 collection: portfolio
 category: real-estate
 permalink: /portfolio/real-estate-3D-modelling
-date: 2020-01-01
 ---
 This interactive app predicts property prices based on inputs such as location, property type, number of façades, rooms, and features (e.g., garden, terrace, fireplace). The prediction is powered by **XGBoost**, and the UI is designed for clarity and accessibility.
 
