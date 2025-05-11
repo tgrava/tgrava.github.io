@@ -1,7 +1,7 @@
 ---
 title: "Extreme Value Theory Applied to Solar Flare Extremes"
 collection: publications
-category: theses
+category: manuscripts
 permalink: /publication/2024-01-01-evt-solar-flares
 excerpt: 'This thesis applies Extreme Value Theory to model solar flare extremes, providing a robust analysis of non-stationarity, tail behavior, and implications for catastrophe insurance pricing.'
 date: 2024-06-01
