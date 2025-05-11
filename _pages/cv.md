@@ -18,22 +18,22 @@ Education
 
 Work Experience
 ======
-* February 2022 – Present: **Teaching Assistant**  
+* **Teaching Assistant**, February 2022 – Present
   * Université Catholique de Louvain  
   * Duties include: Teaching, exam supervision, assessment of group work, etc.  
   * Paid job, financing my Ph.D.
 
-* February – May 2021: **Digital Transformation Consultant**  
+* **Digital Transformation Consultant**, February – May 2021
   * EY  
   * Duties include: Automating various accounting tools in R & Python within the Alteryx platform  
   * Internship  
 
-* 2017 – 2018: **Accountant**  
+* **Accountant**, 2017 – 2018
   * Optimum Fiduciaire  
   * Duties include: General knowledge of SME VAT and taxation  
   * Paid internship  
 
-* 2015 – Present: **Freelancer**  
+* **Freelancer**, 2015 – Present
   * Clients range from local real estate companies and NGOs to video game developers  
   * Duties include: Task automation, web scraping, customer data analysis, mapping, etc.  
   * Paid work  
@@ -49,6 +49,10 @@ Skills
   * Information theory (list decoding, MLD, etc.)  
   * Anything from Kolmogorov  
 
+Service and Leadership
+======
+* If you're part of an NGO located in Belgium, send me an email!
+
 Publications
 ======
 <ul>{% for post in site.publications reversed %}
@@ -61,8 +65,6 @@ Teaching
   {% include archive-single-cv.html %}
 {% endfor %}</ul>
 
-Service and Leadership
-======
-* If you're part of an NGO located in Belgium, send me an email!
+
 
 
