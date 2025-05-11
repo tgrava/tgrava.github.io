@@ -11,56 +11,58 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Economics and Management Sciences, Université Catholique de Louvain, 2022 - Today
-* M.S. in Statistics & Data Sciences, Katholieke Universiteit Leuven, 2024
-* M.A. in Finance, Université Catholique de Louvain, 2021
-* B.S. in Economics and Management Sciences, Université Catholique de Louvain, 2019
+* Ph.D. in Economics and Management Sciences, Université Catholique de Louvain, 2022 – Present  
+* M.S. in Statistics & Data Sciences, Katholieke Universiteit Leuven, 2024  
+* M.A. in Finance, Université Catholique de Louvain, 2021  
+* B.S. in Economics and Management Sciences, Université Catholique de Louvain, 2019  
 
-Work experience
+Work Experience
 ======
-* February 2022 - Today: Teaching Assistant
-  * Université Catholique de Louvain
-  * Duties included: Teaching, exam supervision, assessment of group work, etc
-  * Paid job, financing my PhD
+* February 2022 – Present: Teaching Assistant  
+  * Université Catholique de Louvain  
+  * Duties include: Teaching, exam supervision, assessment of group work, etc.  
+  * Paid job, financing my Ph.D.
 
-* February - May 2021: Digital Transformation Consultant
-  * EY
-  * Duties included: Automating various accounting tools in R & Python within the Alteryx platform
-  * Internship
+* February – May 2021: Digital Transformation Consultant  
+  * EY  
+  * Duties include: Automating various accounting tools in R & Python within the Alteryx platform  
+  * Internship  
 
-* 2017 - 2018: Accountant
-  * Optimum Fiduciaire
-  * Duties included: General knowledge of SME's VAT & fiscality
-  * Paid Internship
-  
-* 2015 - Today: Freelance
-  * From local real estate companies, to NGO, to video game developers
-  * Duties included: Automating tasks, web scraping data, leveraging customers data, mapping, etc
-  * Paid work
-  
+* 2017 – 2018: Accountant  
+  * Optimum Fiduciaire  
+  * Duties include: General knowledge of SME VAT and taxation  
+  * Paid internship  
+
+* 2015 – Present: Freelancer  
+  * Clients range from local real estate companies and NGOs to video game developers  
+  * Duties include: Task automation, web scraping, customer data analysis, mapping, etc.  
+  * Paid work  
+
 Skills
 ======
-* Python, R, C, Matlab
-* Geodata with WebGIS (mostly opensource libraries)
-* Amateurish Reverse engineering (ARM processor)
-* Probability & Statistics: 
-	*Extreme Value (frequentist or bayesian)
-	*Conformal Prediction (frequentist & bayesian, pun intended)
-	*Information theory (list decoding, MLD, etc)
-	*Anything from Kolmogorov
-	
+* Python, R, C, MATLAB  
+* Geodata with WebGIS (mostly open-source libraries)  
+* Amateur reverse engineering (ARM processor)  
+* Probability & Statistics:  
+  * Extreme Value (frequentist or Bayesian)  
+  * Conformal Prediction (frequentist & Bayesian, pun intended)  
+  * Information theory (list decoding, MLD, etc.)  
+  * Anything from Kolmogorov  
+
 Publications
 ======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
+<ul>{% for post in site.publications reversed %}
+  {% include archive-single-cv.html %}
+{% endfor %}</ul>
+
 Teaching
 ======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
+<ul>{% for post in site.teaching reversed %}
+  {% include archive-single-cv.html %}
+{% endfor %}</ul>
+
+Service and Leadership
 ======
-* If you're part of a NGO located in Belgium, send me an email!
+* If you're part of an NGO located in Belgium, send me an email!
+
+
