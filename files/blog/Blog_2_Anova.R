@@ -1,7 +1,6 @@
 ################
 #BALANCED DESIGN
 ################
-
 set.seed(1348) #LLN postcode because why not
 marketing_data <- expand.grid(
   Brand   = factor(c("A", "B")),
@@ -61,3 +60,45 @@ eta2_p <- eta_squared(model, partial = TRUE)$Eta2_partial[1]  # Brand’s η²�
 f       <- sqrt(eta2_p / (1 - eta2_p))
 pwr.anova.test(k = 4, n = 30, f = f, sig.level = 0.05)
 #With 30 participants per cell, the study is almost perfectly powered to detect the Brand effect.
+
+##################
+#UNBALANCED DESIGN
+##################
+
+set.seed(1348)
+
+#Unbalanced design so unequal frequency of observations will be generated
+ns <- c(A_Arts    = 20,
+        A_Science = 40,
+        B_Arts    = 30,
+        B_Science = 50)
+
+marketing_data <- rbind(
+  data.frame(Brand = "A", Faculty = "Arts",    rep = 1:ns["A_Arts"]),
+  data.frame(Brand = "A", Faculty = "Science", rep = 1:ns["A_Science"]),
+  data.frame(Brand = "B", Faculty = "Arts",    rep = 1:ns["B_Arts"]),
+  data.frame(Brand = "B", Faculty = "Science", rep = 1:ns["B_Science"])
+)
+marketing_data$Brand   <- factor(marketing_data$Brand)
+marketing_data$Faculty <- factor(marketing_data$Faculty)
+
+marketing_data$PreferenceScore <- with(marketing_data,
+                                       5 +
+                                         ifelse(Brand == "A",        0.5,  -0.5) +   # Brand effect
+                                         ifelse(Faculty == "Science",0.3,  -0.3) +   # Faculty effect
+                                         rnorm(nrow(marketing_data), sd = 1)          # noise
+)
+
+table(marketing_data$Brand, marketing_data$Faculty)
+
+m1 <- aov(PreferenceScore ~ Brand + Faculty + Brand:Faculty, data = marketing_data)
+summary(m1)
+
+m1b <- aov(PreferenceScore ~ Faculty + Brand + Faculty:Brand, data = marketing_data)
+summary(m1b)
+
+lm2 <- lm(PreferenceScore ~ Brand * Faculty, data = marketing_data)
+Anova(lm2, type = 2)
+
+options(contrasts = c("contr.treatment", "contr.poly"))
+Anova(lm2, type = 3)
