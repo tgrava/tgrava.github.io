@@ -46,7 +46,7 @@ Skills
 * Probability & Statistics:  
   * Extreme Value (frequentist or Bayesian)  
   * Conformal Prediction (frequentist & Bayesian, pun intended)  
-  * Information theory (list decoding, MLD, etc.)  
+  * Information theory (list decoding, MDL, etc.)  
   * Anything from Kolmogorov  
 
 Service and Leadership
