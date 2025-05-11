@@ -4,7 +4,7 @@ collection: teaching
 type: "Undergraduate & Graduate Courses"
 permalink: /teaching/2022-teaching-AFIN
 venue: "Université catholique de Louvain, Finance"
-date: 2022-02-02
+date: 2025-01-01
 location: "Louvain-la-Neuve, Belgium"
 ---
 
