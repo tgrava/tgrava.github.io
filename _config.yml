@@ -94,7 +94,7 @@ talkmap_link             : false      #change to true to add link to talkmap on 
 comments:
   provider               : "disqus" # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
   disqus:
-    shortname            : "@disqus_1KWkL1fWdq"
+    shortname            : "tgrava-github-io"
   discourse:
     server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
@@ -147,7 +147,7 @@ social:
 
 # Analytics
 analytics:
-  provider               :  "google" # false (default), "google", "google-universal", "google-analytics-4", "custom"
+  provider               :  # false (default), "google", "google-universal", "google-analytics-4", "custom"
   google:
     tracking_id          :
 
