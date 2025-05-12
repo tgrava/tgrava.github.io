@@ -90,7 +90,7 @@ layout: default
 
 	{% if site.comments.provider and page.comments %}
 	  {% if site.comments.provider == "disqus" %}
-		{% include disqus.html %}
+		{% include comments-providers/disqus.html %}
 	  {% endif %}
 	{% endif %}
   </article>
